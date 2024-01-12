@@ -3,7 +3,7 @@
 QuantumScript is an interpreted programming language created in c++. It allows for the use of variables, math, control statements, and recursion.
 While there is no dedicated looping structure, loops can be created through recursion.
 
-# Running QuantumScript (.qts) files
+# Running QuantumScript (.qts) files [MAC]
 
 - Create the interpreter with c++, such as with
 
@@ -238,7 +238,7 @@ This code stores the ascii values for the letters in 'Hello World!' and then pri
 aaxbcdqw..*xbcdxb*xbxbqw.xb
 ```
 
-This code multiplies 4, 5, and the value given by the user. if no value is given it outouts zero, as the defaut is 0
+This code multiplies 4, 5, and the value given by the user. if no value is given it outputs zero, as the defaut variable value is 0
 
 ### Fibonacci
 
@@ -248,10 +248,11 @@ mabi.t2.=bfab-tit.b
 fabi.crdo1s32.+cab@b$s-dio=r>dfbcd|c|.r -> uses recursion to replace loops
 ```
 
-This code prints the fibbonaci sequence with as many terms as the user gives with the command line. If no value is supplied, it defaults to 6 terms
-This code does not work if the user inputs the number one, and for any value 0 or less, it will print 6 terms
-Recursion is used with a variable that decrements itself each iteration in order to produce the correct amount of terms
-The code separates each term with a space and ends with a newline character
+This code prints the fibbonaci sequence with as many terms as the user gives with the command line. If no value is supplied, it defaults to 6 terms.
+Recursion is used with a variable that decrements itself each iteration in order to produce the correct amount of terms.
+The code separates each term with a space and ends with a newline character.
+
+_This code does not work if the user inputs the number one, and for any value 0 or less, it will print the default 6 terms_
 
 ```
 1zc.a8o1qs32n10v.+zzo=v>z@mqoz|@mqoa|$n-ccv.c
@@ -260,7 +261,7 @@ fabi.crdo1s32.+cab@b$s-dio=r>dfbcd|c|.r
 ```
 
 This code is similar to above, but takes in two values, the number of terms and the correct value after that many terms.
-If the program's output is not the same as the calculated value, it will display an error
+If the program's output is not the same as the calculated value, it will display an error.
 
 ## Future Planned Additions
 
