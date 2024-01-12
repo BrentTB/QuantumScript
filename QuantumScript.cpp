@@ -269,6 +269,7 @@ void QuantumScript::removeCharacters()
             else if (character == WHITESPACE)
             {
                 functions_[i] = functions_[i].substr(0, ch) + functions_[i].substr(ch + 1);
+                ch--;
             }
         }
     }
