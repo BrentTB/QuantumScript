@@ -23,7 +23,7 @@ g++ -std=c++17 *.cpp -o quantumscript
 g++ -std=c++17 *.cpp -o quantumscript && ./quantumscript file.qts 1 2 3
 ```
 
-_in the two examples above, three command line arguments have been parsed in_
+_in the two examples above, three command line arguments have been passed in_
 
 ## Language Structure
 
