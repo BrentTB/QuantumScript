@@ -278,7 +278,7 @@ qpi.vo1t2as.+aio*vit-spv=v<so|ypa|.v     # if i > p/2, return one, else call the
 
 The code above takes in a number in the command line and prints 'Prime' or 'Not Prime' if the number is prime.
 
-\_Note: Due to recursion limits, this code can only find primes until 3769
+_Note: Due to recursion limits, this code can currently only find primes until about 3700_
 
 ## Future Planned Additions
 

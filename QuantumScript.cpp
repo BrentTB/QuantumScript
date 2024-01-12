@@ -4,6 +4,7 @@ const char MULTIPLICATION = '*';
 const char ADDITION = '+';
 const char DIVISION = '/';
 const char SUBTRACTION = '-';
+const char MODULUS = '%';
 const char IFGREATER = '>';
 const char IFLESS = '<';
 const char ELSE = '|';
@@ -38,6 +39,7 @@ void QuantumScript::run()
 
 ll QuantumScript::mainLoop(ll fnIdx)
 {
+
     string line = functions_[fnIdx];
     ll lnIdx = functions_[fnIdx].find(" ") + 1;
 
@@ -48,11 +50,14 @@ ll QuantumScript::mainLoop(ll fnIdx)
         lnIdx = val.second;
     }
 
+    ll val = 0;
     fo(i, line.find_last_of('.') + 1, line.length())
     {
-        return valueMap_[stackDepth_][line.substr(i, varSize_)];
+        val = valueMap_[stackDepth_][line.substr(i, varSize_)];
+        break;
     }
-    return 0;
+    valueMap_.pop_back();
+    return val;
 }
 
 pair<ll, ll> QuantumScript::getValue(ll fnIdx, ll lnIdx)
@@ -107,11 +112,11 @@ pair<ll, ll> QuantumScript::operatorvalue(char command, ll fnIdx, ll lnIdx)
 {
     switch (command)
     {
-    case '*':
-    case '+':
-    case '/':
-    case '-':
-    case '%':
+    case MULTIPLICATION:
+    case ADDITION:
+    case DIVISION:
+    case SUBTRACTION:
+    case MODULUS:
     {
         string target = getVariable(fnIdx, lnIdx);
         lnIdx += varSize_;
@@ -124,19 +129,19 @@ pair<ll, ll> QuantumScript::operatorvalue(char command, ll fnIdx, ll lnIdx)
 
         switch (command)
         {
-        case '*':
+        case MULTIPLICATION:
             val = val1.first * val2.first;
             break;
-        case '+':
+        case ADDITION:
             val = val1.first + val2.first;
             break;
-        case '/':
+        case DIVISION:
             val = val1.first / val2.first;
             break;
-        case '-':
+        case SUBTRACTION:
             val = val1.first - val2.first;
             break;
-        case '%':
+        case MODULUS:
             val = val1.first % val2.first;
             break;
         }
@@ -145,20 +150,20 @@ pair<ll, ll> QuantumScript::operatorvalue(char command, ll fnIdx, ll lnIdx)
 
         return {val, lnIdx};
     }
-    case '@':
+    case PRINTVALUE:
     {
         auto val = getValue(fnIdx, lnIdx);
         p(val.first);
         return {val.first, val.second};
     }
-    case '$':
+    case PRINTCHAR:
     {
         auto val = getValue(fnIdx, lnIdx);
         p((char)val.first);
         return {val.first, val.second};
     }
-    case '>':
-    case '<':
+    case IFGREATER:
+    case IFLESS:
     {
         auto val1 = getValue(fnIdx, lnIdx);
         lnIdx = val1.second;
@@ -168,9 +173,9 @@ pair<ll, ll> QuantumScript::operatorvalue(char command, ll fnIdx, ll lnIdx)
         fo(i, lnIdx, functions_[fnIdx].find_last_of('.'))
         {
             char character = functions_[fnIdx][i];
-            if (character == '>' || character == '<')
+            if (character == IFGREATER || character == IFLESS)
                 break;
-            if (character == '|')
+            if (character == ELSE)
             {
                 if (endIf == -1)
                 {
@@ -183,13 +188,13 @@ pair<ll, ll> QuantumScript::operatorvalue(char command, ll fnIdx, ll lnIdx)
                 else
                 {
                     /** THROW ERROR */
-                    cout << "ERROR: Too many '|' provided in if statement";
+                    cout << "ERROR: Too many " << ELSE << " provided in if statement";
                     return {};
                 }
             }
         }
 
-        if ((command == '>' && val1.first > 0) || (command == '<' && val1.first <= 0))
+        if ((command == IFGREATER && val1.first > 0) || (command == IFLESS && val1.first <= 0))
         {
 
             auto val2 = getValue(fnIdx, lnIdx);
@@ -213,7 +218,7 @@ pair<ll, ll> QuantumScript::operatorvalue(char command, ll fnIdx, ll lnIdx)
     }
 
     break;
-    case '=':
+    case ASSIGNMENT:
     {
         string target = getVariable(fnIdx, lnIdx);
         lnIdx += varSize_;
@@ -222,7 +227,7 @@ pair<ll, ll> QuantumScript::operatorvalue(char command, ll fnIdx, ll lnIdx)
 
         return val;
     }
-    case '|': // this is handled by the if statements, so it shouldn't appear on its own
+    case ELSE: // this is handled by the if statements, so it shouldn't appear on its own
     default:
         /** THROW ERROR */
         pn("ERROR: Unknown command");
