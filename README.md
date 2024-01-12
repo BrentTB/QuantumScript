@@ -141,7 +141,7 @@ Math operators take three variables, one to assign to and two for the values.
 Output operators only take one variable and output its value, either the number it holds or its ascii value
 
 ```
-1.n66.@66$66.   # This outputs '66B', as the variable n is set to 66 nd B has the ascii value of 66
+1.n66.@66$66.   # This outputs '66B', as the variable n is set to 66 and B has the ascii value of 66
 ```
 
 ### Control Structure
@@ -235,14 +235,14 @@ This code multiplies 4, 5, and the value given by the user. if no value is given
 ### Fibonacci
 
 ```
-1 z.a8 o1 q s32 n10.+zzo >z@mqoz|@mqoa|$n.  # spaces are added for clarity
+1 z.a8 o1 q s32 n10. +zzo >z@mqoz|@mqoa| $n.  # spaces are added for clarity
 m abi.t2. =bfab -tit .b
 f abi. c r d o1 s32. +cab @b $s -dio =r>dfbcd|c| .r
 ```
 
 This code prints the fibbonaci sequence with as many terms as the user gives with the command line. If no value is supplied, it defaults to 6 terms.
 Recursion is used with a variable that decrements itself each iteration in order to produce the correct amount of terms.
-The code separates each term with a space and ends with a newline character.
+The code separates each term with a space (ascii of 32) and ends with a newline character (ascii of 10).
 
 _This code does not work if the user inputs the number one, and for any value 0 or less, it will print the default 6 terms_
 
