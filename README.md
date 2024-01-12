@@ -232,6 +232,16 @@ aaxbcdqw..*xbcdxb*xbxbqw.xb
 
 This code multiplies 4, 5, and the value given by the user. if no value is given it outputs zero, as the defaut variable value is 0
 
+### Greatest Common Divisor and Lowest Common Multiple
+
+```
+3 ina inb. spc32 end10.@gcd ina inb $spc @lcm ina inb $end.  # spacing has been added for readability
+gcd ina inb.. =inb <inb ina|gcd inb %ina ina inb|.inb        # this is equivalent to the following c++ code: int gcd(int a, int b) { return b==0 ? a: gcd(b, a%b);}
+lcm ina inb.var. *var ina inb /var var gcd ina inb.var       # this is equivalent to the following c++ code: int lcm(int a, int b) { return a*b /gcd(a,b);}
+```
+
+This code takes in two command line variables and prints their greatest common divisor and their lowest common multiple
+
 ### Fibonacci
 
 ```
