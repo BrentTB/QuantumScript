@@ -56,8 +56,8 @@ _Note: A non-zero value can be returned even if the progra works as expected, if
 
 Like the main line, functions have four components.
 
-The first part lists the function name, with the same length as the number given to the main line. It then defined variables until the first period.
-These variables are the function's inputs. ie: for a function that has three variables, the function must also be called with three variables.
+The first part lists the function name, with the same length as the number given to the main line. It then defines variables until the first period.
+These variables are the function's inputs. ie: for a function that has three variables, the function must also be called with three variables.(a function can have 0 or more inputs)
 
 The second and third component are the same as the main line, representing variables declared in the function and the code to be run.
 
@@ -265,6 +265,21 @@ fabi.crdo1s32.+cab@b$s-dio=r>dfbcd|c|.r
 This code is similar to above, but takes in two values, the number of terms and the correct value after that many terms.
 If the program's output is not the same as the calculated value, it will display an error.
 
+### Prime Checker
+
+```
+1p..>xpT|F|.                             # a result of 1 means true, zero means false
+F.N78o111t116s32.$N$o$t$sT.              # prints the string 'Not' and calls the next print function
+T.P80r114i105m109e101n10.$P$r$i$m$e$n.   # prints the string 'Prime'
+xp.o1z0g.-gpo=p<gz|qpo|.p                # if p is less than or equal to one, return zero, else call prime helper function, 'q'
+ypi.tz0r.%tpi=r<tz|qpi|.r                # the prime function. if p%i != 0, return 0, or else call function 'q' to increment i
+qpi.vo1t2as.+aio*vit-spv=v<so|ypa|.v     # if i > p/2, return one, else call the prime function with i incremented by 1
+```
+
+The code above takes in a number in the command line and prints 'Prime' or 'Not Prime' if the number is prime.
+
+\_Note: Due to recursion limits, this code can only find primes until 3769
+
 ## Future Planned Additions
 
 - add error messages, with their own error classes
@@ -274,3 +289,5 @@ If the program's output is not the same as the calculated value, it will display
 - change ll to a number type that can grow arbitrarily large
 - give functions the ability to return multiple values and for all of those to be used in a different function call
 - make it so that you can have lots of code in if statements, and not just one function/symbol(@,+,-...)
+- add support for negative (the code works with them but you can't define variables as negative right now)
+- add support for an if defined in another if
