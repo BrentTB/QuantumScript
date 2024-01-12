@@ -1,6 +1,6 @@
 #include "QuantumScript.h"
 
-QuantumScript::QuantumScript(string code, vector<ll> &argv) : stackDepth_{0}, checkMode_{0}
+QuantumScript::QuantumScript(string code, vector<ll> &argv) : stackDepth_{0}
 {
     istringstream iss(code);
 
@@ -9,7 +9,6 @@ QuantumScript::QuantumScript(string code, vector<ll> &argv) : stackDepth_{0}, ch
     {
         functions_.push_back(line);
     }
-    numFunctions_ = functions_.size();
     setUpVariablesMain(argv);
     setUpFunctions(code);
 }
@@ -68,7 +67,7 @@ pair<ll, ll> QuantumScript::getValue(ll fnIdx, ll lnIdx)
     else // it must be a command symbol
     {
         char command = line[lnIdx];
-        return commandValue(line[lnIdx], fnIdx, lnIdx + 1);
+        return operatorvalue(line[lnIdx], fnIdx, lnIdx + 1);
     }
 }
 
@@ -90,7 +89,7 @@ string QuantumScript::getVariable(ll fnIdx, ll lnIdx)
     return {};
 }
 
-pair<ll, ll> QuantumScript::commandValue(char command, ll fnIdx, ll lnIdx)
+pair<ll, ll> QuantumScript::operatorvalue(char command, ll fnIdx, ll lnIdx)
 {
     switch (command)
     {
@@ -135,21 +134,18 @@ pair<ll, ll> QuantumScript::commandValue(char command, ll fnIdx, ll lnIdx)
     case '@':
     {
         auto val = getValue(fnIdx, lnIdx);
-        if (!checkMode_)
-            p(val.first);
+        p(val.first);
         return {val.first, val.second};
     }
     case '$':
     {
         auto val = getValue(fnIdx, lnIdx);
-        if (!checkMode_)
-            p((char)val.first);
+        p((char)val.first);
         return {val.first, val.second};
     }
     case '>':
     case '<':
     {
-
         auto val1 = getValue(fnIdx, lnIdx);
         lnIdx = val1.second;
 
@@ -246,7 +242,7 @@ pair<ll, ll> QuantumScript::callFunction(string newFn, ll fnIdx, ll lnIdx)
 
 void QuantumScript::setUpFunctions(string code)
 {
-    fo(i, 1, numFunctions_)
+    fo(i, 1, functions_.size())
     {
         auto line = functions_[i];
         string name = line.substr(0, varSize_);
