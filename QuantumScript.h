@@ -37,6 +37,12 @@ public:
 
 private:
     /**
+     * @brief removes all comments and whitespaces from the inputed code
+     *
+     */
+    void removeCharacters();
+
+    /**
      * @brief Set the function names and load the functions
      *
      * @param code the string representing the user's input

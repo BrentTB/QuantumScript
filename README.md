@@ -141,10 +141,8 @@ Math operators take three variables, one to assign to and two for the values.
 Output operators only take one variable and output its value, either the number it holds or its ascii value
 
 ```
-1.n66.@66$66.
+1.n66.@66$66.   # This outputs '66B', as the variable n is set to 66 nd B has the ascii value of 66
 ```
-
-The example above outputs '66B', as the variable n is set to 66 nd B has the ascii value of 66
 
 ### Control Structure
 
@@ -155,13 +153,9 @@ The example above outputs '66B', as the variable n is set to 66 nd B has the asc
 Control statements take two variables by default, but can take three if a second '|' is used as an else
 
 ```
->ab|
-<cd|e|
+>ab|    # This line means if (a > 0) then call (b)
+<cd|e|  # This line means if (c <= 0) then call (d) else call (e)
 ```
-
-The first line means if (a > 0) then call (b)
-
-The second line means if (c <= 0) then call (d) else call (e)
 
 An if statement must have at least one '|' operator to be valid.
 Note: Only one function or assignment can be called in an if statement (right now)
@@ -192,10 +186,8 @@ _this code means: define var a=5. if a >0, call function b with input a. Functio
 Assignment takes two values.
 
 ```
-=ab
+=ab   # For a variable size of 1, this line means a = b
 ```
-
-- For a variable size of 1, this line means a = b
 
 Assignment is equivalent to adding or subtracting 0 from a number, or multiplying or dividing by 1, and thus variables can be assigned in multiple ways
 
@@ -206,7 +198,7 @@ A function is called by putting its name followed by the number of values that m
 _Note: the values passed into a function can contain another function, and that functions output will become one of the new function's variables_
 
 ```
-1.a1b2c3d4e5.zaaazqabcqedeqaaa.
+1.a1b2c3d4e5.zaaa z qabc qede qaaa.  # the spaces were added for clarity, the interpreter ignores spaces
 zabc..@a@b@c.b
 qabc..@c@b@a.b
 ```
@@ -219,7 +211,7 @@ _Note the first line is equaivalent to: z(a,a,a) followed by z(q(a,b,c), q(e,d,e
 
 ## Comments
 
-_not implemented yet_
+Anything after a '#' symbol in a line will not be read, and thus can be used after the function to write comments. Spaces are also automatically removed, so as many spaces as desired can be used
 
 ## Examples
 
@@ -243,9 +235,9 @@ This code multiplies 4, 5, and the value given by the user. if no value is given
 ### Fibonacci
 
 ```
-1z.a8o1qs32n10.+zzo>z@mqoz|@mqoa|$n.
-mabi.t2.=bfab-tit.b
-fabi.crdo1s32.+cab@b$s-dio=r>dfbcd|c|.r -> uses recursion to replace loops
+1 z.a8 o1 q s32 n10.+zzo >z@mqoz|@mqoa|$n.  # spaces are added for clarity
+m abi.t2. =bfab -tit .b
+f abi. c r d o1 s32. +cab @b $s -dio =r>dfbcd|c| .r
 ```
 
 This code prints the fibbonaci sequence with as many terms as the user gives with the command line. If no value is supplied, it defaults to 6 terms.

@@ -1,5 +1,18 @@
 #include "QuantumScript.h"
 
+const char MULTIPLICATION = '*';
+const char ADDITION = '+';
+const char DIVISION = '/';
+const char SUBTRACTION = '-';
+const char IFGREATER = '>';
+const char IFLESS = '<';
+const char ELSE = '|';
+const char PRINTVALUE = '@';
+const char PRINTCHAR = '$';
+const char ASSIGNMENT = '=';
+const char COMMENT = '#';
+const char WHITESPACE = ' ';
+
 QuantumScript::QuantumScript(string code, vector<ll> &argv) : stackDepth_{0}
 {
     istringstream iss(code);
@@ -9,6 +22,7 @@ QuantumScript::QuantumScript(string code, vector<ll> &argv) : stackDepth_{0}
     {
         functions_.push_back(line);
     }
+    removeCharacters();
     setUpVariablesMain(argv);
     setUpFunctions(code);
 }
@@ -238,6 +252,26 @@ pair<ll, ll> QuantumScript::callFunction(string newFn, ll fnIdx, ll lnIdx)
     stackDepth_--;
 
     return {val, lnIdx};
+}
+
+void QuantumScript::removeCharacters()
+{
+    fo(i, 0, functions_.size())
+    {
+        fo(ch, 0, functions_[i].length())
+        {
+            auto character = functions_[i][ch];
+            if (character == COMMENT)
+            {
+                functions_[i] = functions_[i].substr(0, ch);
+                continue;
+            }
+            else if (character == WHITESPACE)
+            {
+                functions_[i] = functions_[i].substr(0, ch) + functions_[i].substr(ch + 1);
+            }
+        }
+    }
 }
 
 void QuantumScript::setUpFunctions(string code)
