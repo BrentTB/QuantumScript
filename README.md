@@ -104,9 +104,12 @@ All operators return the value they represent
 +za+abc
 ```
 
-For a variable size of 1, The line above means the same as z = a + (a=b+c)
-As operators run from left to right, this program ends with z having the value of z = a+b+c, and not z = (b+c)+(b+c)
-As a consequency for this, the second 'a' could be any variable and it would not change the value z recieves
+For a variable size of 1, The line above means the same as z = a + (a=b+c).
+As operators run from left to right, this program ends with z having the value of z = a+b+c, and not z = (b+c)+(b+c).
+As a consequency for this, the second 'a' could be any variable and it would not change the value z recieves.
+
+However, if the line were '+za+zbc', this would mean z = a + (z=b+c), resulting in z being defined twice in a row.
+However, as the second addition must be completed for the first addition to complete, this will first give z the value of b+c, and then give z the value of a+b+c
 
 ### Math Operators
 
@@ -157,6 +160,7 @@ Control statements take two variables by default, but can take three if a second
 ```
 
 The first line means if (a > 0) then call (b)
+
 The second line means if (c <= 0) then call (d) else call (e)
 
 An if statement must have at least one '|' operator to be valid.
@@ -177,7 +181,7 @@ bz..@z.
 ```
 
 Will both only print the number '5' once. The second 'ba' in '>ababa|' is never read.
-Thus, if you want multiple things to happen in an if statement, they must be put in a separate function and called from the if statement
+Thus, if you want multiple things to happen in an if statement, they must be put in a separate function and called from the if statement.
 
 _this code means: define var a=5. if a >0, call function b with input a. Function b takes one input, defined z, prints its value, and returns 0_
 
@@ -207,7 +211,7 @@ zabc..@a@b@c.b
 qabc..@c@b@a.b
 ```
 
-In the code above, the functions 'z' and 'q' take in three inputs and print them forward or backwards, and then both return the middle value
+In the code above, the functions 'z' and 'q' take in three inputs and print them forward or backwards, and then both return the middle value.
 The function 'z' is called twice in the main line, first with three values defined in the main line.
 It is then called, with all three of its values being returned from the 'q' function.
 
