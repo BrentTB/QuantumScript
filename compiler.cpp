@@ -7,24 +7,21 @@ int main(int argc, char *argv[])
 
     if (argc < 2)
     {
-        std::cerr << "Usage: " << argv[0] << " <filename.qts>" << std::endl;
+        cerr << "Usage: " << argv[0] << " <filename.qts>" << endl;
         return 1;
     }
 
-    const std::string filename(argv[1]);
-    std::ifstream file(filename);
+    const string filename(argv[1]);
+    ifstream file(filename);
 
     if (!file.is_open())
     {
-        std::cerr << "Error: File '" << filename << "' not found." << std::endl;
+        cerr << "Error: File '" << filename << "' not found." << endl;
         return 1;
     }
 
-    std::string code((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    string code((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
     file.close();
-
-    // SimpleLanguageInterpreter interpreter;
-    // interpreter.execute(code);
 
     vector<ll> argvNew;
     for (int i = 2; i < argc; i++)
