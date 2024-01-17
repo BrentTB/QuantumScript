@@ -226,7 +226,7 @@ pair<ll, ll> QuantumScript::operatorvalue(char command, ll fnIdx, ll lnIdx)
         }
         else
         {
-            on = (hasElse != -1 ? hasElse : endIf);
+            on = (hasElse != -1 ? hasElse : endIf - 1);
             end = endIf - 1;
         }
 
