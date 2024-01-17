@@ -151,34 +151,29 @@ Output operators only take one variable and output its value, either the number 
 - : else
 - | end-if
 
-Control statements take two variables by default, but can take three if a second '|' is used as an else
+Control statements take two variables by default, but can take three if an else is used, ':'
 
 ```
 >ab|    # This line means if (a > 0) then call (b)
 <cd:e|  # This line means if (c <= 0) then call (d) else call (e)
 ```
 
-An if statement must have at least one '|' operator to be valid.
-Note: Only one function or assignment can be called in an if statement (right now)
-
-This means that
+An if statement must end with a '|' operator to be valid.
 
 ```
-1.a5.>aba|.
-bz..@z.
+1.a5.>cababa|.      # This line means: if c(a) > 0, call b(a) and then call b(a). This code prints the number 5 twice
+bz..@z.             # This function, b, prints the number given to it
+cz.f4.-zzf.z        # This function, c, takes in a number, subtracts 4 from it, and returns that
 ```
 
-and
+If statements return the value of their last command, which can be a variable or the outcome of a function or operator
 
 ```
-1.a5.>ababa|.
-bz..@z.
+1.a1b2c3.@>abc:cb|. # This code means print the result of: if(a > 0), call the variables b and c, else call c and b
 ```
 
-Will both only print the number '5' once. The second 'ba' in '>ababa|' is never read.
-Thus, if you want multiple things to happen in an if statement, they must be put in a separate function and called from the if statement.
-
-_this code means: define var a=5. if a >0, call function b with input a. Function b takes one input, defined z, prints its value, and returns 0_
+The code above prints the output of the if statement. As a is greater than zero, the if statements calls 'bc'. The last value returned in the if statement is c. Thus, the code
+prints the value of the if statement, ie: it prints the value of c, which is 3
 
 ### Assignment
 
