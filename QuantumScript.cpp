@@ -7,7 +7,8 @@ const char SUBTRACTION = '-';
 const char MODULUS = '%';
 const char IFGREATER = '>';
 const char IFLESS = '<';
-const char ELSE = '|';
+const char ELSE = ':';
+const char ENDIF = '|';
 const char PRINTVALUE = '@';
 const char PRINTCHAR = '$';
 const char ASSIGNMENT = '=';
@@ -165,56 +166,84 @@ pair<ll, ll> QuantumScript::operatorvalue(char command, ll fnIdx, ll lnIdx)
     case IFGREATER:
     case IFLESS:
     {
-        auto val1 = getValue(fnIdx, lnIdx);
-        lnIdx = val1.second;
+        auto val = getValue(fnIdx, lnIdx);
+        lnIdx = val.second;
 
         ll endIf = -1;
         ll hasElse = -1;
+
+        ll startCount = 0;                 // for tracking if we are in a sub-if statement, so we go to the correct end
+        ll subIfStart = -1, subIfEnd = -1; // where the sub-if statements start and end
         fo(i, lnIdx, functions_[fnIdx].find_last_of('.'))
         {
             char character = functions_[fnIdx][i];
             if (character == IFGREATER || character == IFLESS)
-                break;
-            if (character == ELSE)
             {
-                if (endIf == -1)
+                startCount++;
+                if (subIfStart == -1)
+                    subIfStart = i;
+            }
+            else if (character == ENDIF)
+            {
+                if (startCount > 0)
                 {
-                    endIf = i + 1;
-                }
-                else if (hasElse == -1)
-                {
-                    hasElse = i + 1;
+                    startCount--;
+                    if (subIfEnd == -1)
+                        subIfEnd = i + 1;
                 }
                 else
                 {
-                    /** THROW ERROR */
-                    cout << "ERROR: Too many " << ELSE << " provided in if statement";
-                    return {};
+                    endIf = i + 1;
+                    break;
+                }
+            }
+            else if (character == ELSE)
+            {
+                if (startCount == 0) // we are in the original if statement
+                {
+                    if (hasElse != -1) // there are 2 else operators in one if statement
+                    {
+                        /** THROW ERROR */
+                        cout << "ERROR: Too many : symbols in one if statement";
+                        return {};
+                    }
+                    hasElse = i + 1;
                 }
             }
         }
-
-        if ((command == IFGREATER && val1.first > 0) || (command == IFLESS && val1.first <= 0))
+        if (startCount != 0 || endIf == -1)
         {
+            /** THROW ERROR */
+            cout << (startCount >= 0 ? ("ERROR: If statement without a corresponding | symbol") : ("ERROR: Too many | symbols without corresponding if statements"));
+            return {};
+        }
 
-            auto val2 = getValue(fnIdx, lnIdx);
-            if (hasElse != -1)
-            {
-                return {val2.first, hasElse}; // if it has an else, we want the index to be past that else
-            }
-            else
-                return {val2.first, endIf};
+        ll on = 0, end = 0;
+        if ((command == IFGREATER && val.first > 0) || (command == IFLESS && val.first <= 0))
+        {
+            on = lnIdx;
+            end = (hasElse != -1 ? hasElse - 1 : endIf - 1);
         }
         else
         {
-            if (hasElse != -1)
-            {
-                auto elseVal = getValue(fnIdx, endIf);
-                return {elseVal.first, hasElse};
-            }
-            else
-                return {0, endIf}; // if no else, return a zero at the index after the var ends
+            on = (hasElse != -1 ? hasElse : endIf);
+            end = endIf - 1;
         }
+
+        val = {0, 0};
+        while (on < end)
+        {
+            val = getValue(fnIdx, on);
+            on = val.second;
+        }
+        if (on != end)
+        {
+            /** THROW ERROR */
+            cout << "ERROR: If statement ended in an impossible location";
+            return {};
+        }
+
+        return {val.first, endIf};
     }
 
     break;
@@ -227,7 +256,8 @@ pair<ll, ll> QuantumScript::operatorvalue(char command, ll fnIdx, ll lnIdx)
 
         return val;
     }
-    case ELSE: // this is handled by the if statements, so it shouldn't appear on its own
+    case ENDIF: // this is handled by the if statements, so it shouldn't appear on its own
+    case ELSE:  // this is handled by the if statements, so it shouldn't appear on its own
     default:
         /** THROW ERROR */
         pn("ERROR: Unknown command");
@@ -357,6 +387,9 @@ void QuantumScript::setDeclaredVariables(ll idx)
 pair<ll, ll> QuantumScript::findNum(ll functionIndex, ll stringIndex)
 {
     ll val = 0;
+    bool negative = functions_[functionIndex][stringIndex] == '-';
+    if (negative)
+        stringIndex++;
     while (true)
     {
         char on = functions_[functionIndex][stringIndex];
@@ -365,9 +398,9 @@ pair<ll, ll> QuantumScript::findNum(ll functionIndex, ll stringIndex)
         val = 10 * val + on - '0';
         stringIndex++;
     }
-    return {val, stringIndex};
+    return {val * (negative ? -1 : 1), stringIndex};
 }
 
 /*
-g++ -std=c++17 *.cpp -o quantumscript && ./quantumscript test.qts 1 2 3
+g++ -std=c++17 *.cpp -o quantumscript && ./quantumscript file.qts 1 2 3
 */

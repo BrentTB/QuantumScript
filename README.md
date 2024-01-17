@@ -44,11 +44,11 @@ After the last period, the return value is given. This can be left empty or can 
 _Note: A non-zero value can be returned even if the progra works as expected, if the user desires, it only adds as a checking mechanism_
 
 ```bash
-2abcc.qw4er.@qw.ab
+2abcc.qw4erpl-5.@qw.ab
 ```
 
 - This line means that variables are 2 characters long. 2 command line values are defined, 'ab' and 'cc'.
-- Two more variables are defined, 'qw' which has a value of 4, and 'er' which has a value of zero
+- Three more variables are defined, 'qw' which has a value of 4, 'er' which has a value of zero, and pl which has a value of -5
 - This program will only print the value of qw, ie: 4
 - the program returns ab, and so if a non-zero value is supplied through the command line for 'ab', it will return an error
 
@@ -148,13 +148,14 @@ Output operators only take one variable and output its value, either the number 
 
 - \> if input \> 0
 - \< if input \<= 0
-- | used to separate statements and to provide an else
+- : else
+- | end-if
 
 Control statements take two variables by default, but can take three if a second '|' is used as an else
 
 ```
 >ab|    # This line means if (a > 0) then call (b)
-<cd|e|  # This line means if (c <= 0) then call (d) else call (e)
+<cd:e|  # This line means if (c <= 0) then call (d) else call (e)
 ```
 
 An if statement must have at least one '|' operator to be valid.
@@ -236,8 +237,8 @@ This code multiplies 4, 5, and the value given by the user. if no value is given
 
 ```
 3 ina inb. spc32 end10.@gcd ina inb $spc @lcm ina inb $end.  # spacing has been added for readability
-gcd ina inb.. =inb <inb ina|gcd inb %ina ina inb|.inb        # this is equivalent to the following c++ code: int gcd(int a, int b) { return b==0 ? a: gcd(b, a%b);}
-lcm ina inb.var. *var ina inb /var var gcd ina inb.var       # this is equivalent to the following c++ code: int lcm(int a, int b) { return a*b /gcd(a,b);}
+gcd ina inb.. =inb <inb ina:gcd inb %ina ina inb|.inb        # equivalent to the following c++ code: int gcd(int a, int b) { return b==0 ? a: gcd(b, a%b);}
+lcm ina inb.var. *var ina inb /var var gcd ina inb.var       # equivalent to the following c++ code: int lcm(int a, int b) { return a*b /gcd(a,b);}
 ```
 
 This code takes in two command line variables and prints their greatest common divisor and their lowest common multiple
@@ -245,9 +246,9 @@ This code takes in two command line variables and prints their greatest common d
 ### Fibonacci
 
 ```
-1 z.a8 o1 q s32 n10. +zzo >z@mqoz|@mqoa| $n.  # spaces are added for clarity
+1 z.a8 o1 q s32 n10. +zzo >z@mqoz:@mqoa| $n.  # spaces are added for clarity
 m abi.t2. =bfab -tit .b
-f abi. c r d o1 s32. +cab @b $s -dio =r>dfbcd|c| .r
+f abi. c r d o1 s32. +cab @b $s -dio =r>dfbcd:c| .r
 ```
 
 This code prints the fibbonaci sequence with as many terms as the user gives with the command line. If no value is supplied, it defaults to 6 terms.
@@ -257,9 +258,9 @@ The code separates each term with a space (ascii of 32) and ends with a newline 
 _This code does not work if the user inputs the number one, and for any value 0 or less, it will print the default 6 terms_
 
 ```
-1zc.a8o1qs32n10v.+zzo=v>z@mqoz|@mqoa|$n-ccv.c
+1zc.a8o1qs32n10v.+zzo=v>z@mqoz:@mqoa|$n-ccv.c
 mabi.t2.=bfab-tit.b
-fabi.crdo1s32.+cab@b$s-dio=r>dfbcd|c|.r
+fabi.crdo1s32.+cab@b$s-dio=r>dfbcd:c|.r
 ```
 
 This code is similar to above, but takes in two values, the number of terms and the correct value after that many terms.
@@ -268,12 +269,12 @@ If the program's output is not the same as the calculated value, it will display
 ### Prime Checker
 
 ```
-1p..>xpT|F|.                             # a result of 1 means true, zero means false
+1p..>xpT:F|.                             # a result of 1 means true, zero means false
 F.N78o111t116s32.$N$o$t$sT.              # prints the string 'Not' and calls the next print function
 T.P80r114i105m109e101n10.$P$r$i$m$e$n.   # prints the string 'Prime'
-xp.o1z0g.-gpo=p<gz|qpo|.p                # if p is less than or equal to one, return zero, else call prime helper function, 'q'
-ypi.tz0r.%tpi=r<tz|qpi|.r                # the prime function. if p%i != 0, return 0, or else call function 'q' to increment i
-qpi.vo1t2as.+aio*vit-spv=v<so|ypa|.v     # if i > p/2, return one, else call the prime function with i incremented by 1
+xp.o1z0g.-gpo=p<gz:qpo|.p                # if p is less than or equal to one, return zero, else call prime helper function, 'q'
+ypi.tz0r.%tpi=r<tz:qpi|.r                # the prime function. if p%i != 0, return 0, or else call function 'q' to increment i
+qpi.vo1t2as.+aio*vit-spv=v<so:ypa|.v     # if i > p/2, return one, else call the prime function with i incremented by 1
 ```
 
 The code above takes in a number in the command line and prints 'Prime' or 'Not Prime' if the number is prime.
@@ -284,10 +285,5 @@ _Note: Due to recursion limits, this code can currently only find primes until a
 
 - add error messages, with their own error classes
 - add arrays
-- add ability for comments
-- removes all whitespaces from text if they exist
 - change ll to a number type that can grow arbitrarily large
 - give functions the ability to return multiple values and for all of those to be used in a different function call
-- make it so that you can have lots of code in if statements, and not just one function/symbol(@,+,-...)
-- add support for negative (the code works with them but you can't define variables as negative right now)
-- add support for an if defined in another if
