@@ -241,16 +241,15 @@ This code takes in two command line variables and prints their greatest common d
 ### Fibonacci
 
 ```
-1 z.a8 o1 q s32 n10. +zzo >z@mqoz:@mqoa| $n.  # spaces are added for clarity
-m abi.t2. =bfab -tit .b
-f abi. c r d o1 s32. +cab @b $s -dio =r>dfbcd:c| .r
+2 nt . on 1  sx 6  nl 10  zz . < nt = nt sx |  fb nt on on  $ nl . zz # Spaces are added for clarrity
+fb kk aa bb . on 1  sp 32  nx  km . @ aa  - km kk on  > km  $ sp  fb km bb  + nx aa bb | .
 ```
 
-This code prints the fibbonaci sequence with as many terms as the user gives with the command line. If no value is supplied, it defaults to 6 terms.
-Recursion is used with a variable that decrements itself each iteration in order to produce the correct amount of terms.
+This code prints the fibonacci sequence with as many terms as the user gives with the command line. If no value is supplied, it defaults to 6 terms.
+Recursion is used with a counter that decreases by one on each call in order to produce the correct amount of terms.
 The code separates each term with a space (ascii of 32) and ends with a newline character (ascii of 10).
 
-_This code does not work if the user inputs the number one, and for any value 0 or less, it will print the default 6 terms_
+For any value of 0 or less, it will print the default 6 terms: missing command line arguments are given the value 0, so the code cannot tell "no input" apart from an explicit 0.
 
 ```
 1zc.a8o1qs32n10v.+zzo=v>z@mqoz:@mqoa|$n-ccv.c
